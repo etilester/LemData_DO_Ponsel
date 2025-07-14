@@ -3,7 +3,7 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 # List of required packages
 packages <- c(
-  "tidyverse", "plotly", "here", "knitr",
+  "ragg", "tidyverse", "plotly", "here", "knitr",
   "kableExtra", "readr", "lubridate", "conflicted"
 )
 
