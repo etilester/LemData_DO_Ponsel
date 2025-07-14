@@ -1,0 +1,95 @@
+---
+title: "Lemming_DO: Ponsel optode"
+format: 
+  html: 
+    embed-resources: true # this is to be able to share a standalone html file
+execute:
+  echo: FALSE
+  warning: FALSE
+---
+
+```{r, include = FALSE}
+Sys.setenv(LANG = "en")
+options(scipen=999) # for not using scientific notation
+# getOption("scipen") # in case we would like to change the notation
+
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+library(conflicted)
+library(plotly)
+library(here)
+library(knitr)
+library(kableExtra)
+library(readr)
+```
+
+```{r, include = FALSE}
+
+# convert Marthin's link: https://github.com/MarthinB/API/blob/main/Lemming/Optod/ModData-lemmingponsel.txt to raw url
+
+url <- "https://raw.githubusercontent.com/MarthinB/API/main/Lemming/Optod/ModData-lemmingponsel.txt"
+ponsel <- read_delim(url, delim = "\t")  # or try delim = " " if it's space-delimited
+
+```
+
+```{r, include = FALSE}
+## Organize dataframes
+
+# ponsel$DateTime <- lubridate::as_datetime(ponsel$UnixTime, tz = "CET")
+ponsel_upd <- ponsel %>%
+  mutate(DateTime = lubridate::as_datetime(UnixTime, tz = "CET"),
+         tank_id = if_else(DateTime <= "2025-05-28 12:00:00", "C2", "H2"),
+         dataOx = "Ponsel",
+         dataT = "Ponsel") %>%
+  distinct() %>%
+  select(ID, tank_id, UnixTime, DateTime, Temperature, 
+  Oxygen_Saturation, Oxygen_mgL, Oxygen_PPM, dataOx, dataT) %>%
+  arrange(DateTime)
+
+
+
+```
+<br>
+```{r}
+
+colvec <- c("H2" = "#EF8A62", "C2"="#67A9CF") 
+
+p_oxy <- ggplot(ponsel_upd  %>%
+                   subset(DateTime >= Sys.Date() - 10),
+                aes(x= DateTime, y = Oxygen_mgL, color = tank_id) ) +
+  geom_line() +
+  geom_point(size = 0.2) +
+  scale_colour_manual(values=colvec) +
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position = "top",
+        legend.justification="left",
+        legend.margin = margin(0.1, 0.1, 0.1, 0.1)) +
+  ggtitle("Raw DO data from ponsel")
+ggplotly(p_oxy)
+
+##
+
+```
+<br>
+
+```{r}
+
+p_temp <- ggplot(ponsel_upd %>%
+                   subset(DateTime >= Sys.Date() - 10), 
+                 aes(x= DateTime, y = Temperature, color = tank_id) ) +
+  geom_line() +
+  geom_point(size = 0.2) +
+  scale_colour_manual(values=colvec)+
+  theme_bw()+
+  theme(legend.title = element_blank(),
+        legend.position = "top",
+        legend.justification="left",
+        legend.margin = margin(0.1, 0.1, 0.1, 0.1)) +
+  ggtitle("Raw Temperature data from ponsel")
+ggplotly(p_temp)
+
+
+```

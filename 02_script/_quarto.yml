@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Lemming H2 DO"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: Oxy_Ponsel_C2_H2.qmd
+        text: Data
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    page-layout: full
+    embed-resources: true
+    css: styles.css
