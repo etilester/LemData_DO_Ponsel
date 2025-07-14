@@ -42,7 +42,7 @@ ponsel_upd <- ponsel %>%
   mutate(DateTime = lubridate::as_datetime(UnixTime, tz = "CET"),
          tank_id = if_else(DateTime <= "2025-05-28 12:00:00", "C2", "H2"),
          dataOx = "Ponsel",
-         dataT = "Ponsel2") %>%
+         dataT = "Ponsel") %>%
   distinct() %>%
   select(ID, tank_id, UnixTime, DateTime, Temperature, 
   Oxygen_Saturation, Oxygen_mgL, Oxygen_PPM, dataOx, dataT) %>%
