@@ -3,12 +3,12 @@ project:
   output-dir: docs
 
 website:
-  title: "Lemming H2 DO"
+  title: "Lemming ponsel DO and Temperature"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: Oxy_Ponsel_C2_H2.qmd
+      - href: Lemming_Ponsel_Optode.qmd
         text: Data
 
 format:

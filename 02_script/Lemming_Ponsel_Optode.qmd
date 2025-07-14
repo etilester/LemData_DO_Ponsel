@@ -1,5 +1,5 @@
 ---
-title: "Lemming_DO: Ponsel optode"
+title: "Lemming: Ponsel optode"
 format: 
   html: 
     embed-resources: true # this is to be able to share a standalone html file
@@ -54,21 +54,20 @@ ponsel_upd <- ponsel %>%
 <br>
 ```{r}
 
-colvec <- c("H2" = "#EF8A62", "C2"="#67A9CF") 
+colvec_DO <- c("#EF8A62") 
 
 p_oxy <- ggplot(ponsel_upd  %>%
                    subset(DateTime >= Sys.Date() - 10),
-                aes(x= DateTime, y = Oxygen_mgL, color = tank_id) ) +
-  geom_line() +
-  geom_point(size = 0.2) +
-  scale_colour_manual(values=colvec) +
+                aes(x= DateTime, y = Oxygen_mgL)) +
+  geom_line(colour = colvec_DO) +
+  geom_point(size = 0.2, colour = colvec_DO) +
+  facet_wrap(tank_id ~., ncol = 3) +
   theme_bw()+
-  theme(legend.title = element_blank(),
-        legend.position = "top",
-        legend.justification="left",
-        legend.margin = margin(0.1, 0.1, 0.1, 0.1)) +
-  ggtitle("Raw DO data from ponsel")
+  theme(legend.position = "none") +
+  ggtitle("Raw DO data from ponsel") +
+  theme(plot.title = element_text(size = 12, face = "bold"))
 ggplotly(p_oxy)
+
 
 ##
 
@@ -77,19 +76,20 @@ ggplotly(p_oxy)
 
 ```{r}
 
+colvec_Temp <- c("#67A9CF") 
+
 p_temp <- ggplot(ponsel_upd %>%
                    subset(DateTime >= Sys.Date() - 10), 
-                 aes(x= DateTime, y = Temperature, color = tank_id) ) +
-  geom_line() +
-  geom_point(size = 0.2) +
-  scale_colour_manual(values=colvec)+
+                 aes(x= DateTime, y = Temperature) ) +
+  geom_line(color = colvec_Temp) +
+  geom_point(size = 0.2, color = colvec_Temp) +
+  facet_wrap(tank_id ~., ncol = 3) +
   theme_bw()+
-  theme(legend.title = element_blank(),
-        legend.position = "top",
-        legend.justification="left",
-        legend.margin = margin(0.1, 0.1, 0.1, 0.1)) +
-  ggtitle("Raw Temperature data from ponsel")
+  theme(legend.position = "none") +
+  ggtitle("Raw Temperature data from ponsel") +
+  theme(plot.title = element_text(size = 12, face = "bold"))
 ggplotly(p_temp)
+
 
 
 ```
