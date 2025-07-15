@@ -1,8 +1,10 @@
 ---
-title: "Welcome"
+title: Redirect
 format: html
+execute:
+  echo: false
+  eval: false
 ---
 
-# Welcome to the Lemming ponsel Site
 
-Use the navigation bar to view the data.
+<meta http-equiv="refresh" content="0; url=Lemming_Ponsel_Optode.html">
