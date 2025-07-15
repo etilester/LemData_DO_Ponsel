@@ -39,8 +39,9 @@ ponsel <- read_delim(url, delim = "\t")  # or try delim = " " if it's space-deli
 
 # ponsel$DateTime <- lubridate::as_datetime(ponsel$UnixTime, tz = "CET")
 ponsel_upd <- ponsel %>%
-  mutate(DateTime = lubridate::as_datetime(UnixTime, tz = "CET"),
-         tank_id = if_else(DateTime <= "2025-05-28 12:00:00", "C2", "H2"),
+  mutate(DateTime_UTC = ymd_hms(received_at, tz = "UTC"),
+         DateTime = with_tz(DateTime_UTC, tzone = "Europe/Copenhagen"),
+         tank_id = if_else(DateTime <= ymd_hms("2025-05-28 12:00:00", tz = "Europe/Copenhagen"), "C2", "H2"),
          dataOx = "Ponsel",
          dataT = "Ponsel") %>%
   distinct() %>%
