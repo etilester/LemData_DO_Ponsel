@@ -2,7 +2,7 @@ name: Render and Publish Quarto Site
 
 on:
   schedule:
-    - cron: '0 * * * *'  # every hour minute 0 UTC
+    #- cron: '0 * * * *'  # every hour minute 0 UTC
     #- cron: '30 * * * *'  # At minute 30 past every hour - uncomment this if needed
   workflow_dispatch:     # Allows manual triggering
 
